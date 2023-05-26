@@ -6,6 +6,7 @@ import './components/users/users.css'
 
 function App() {
     const [users, setUsers] = react.useState([]);
+    const [filteredUsers, setFilteredUsers] = react.useState([]);
 
     useEffect(() => {
         fetchData();
@@ -14,7 +15,7 @@ function App() {
     const fetchData = async () => {
         await fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => response.json())
-            .then(json => setUsers(json))
+            .then(json => setFilteredUsers(json))
             .catch(error => console.log(error));
     };
 
@@ -61,21 +62,24 @@ function App() {
             .catch(error => console.log(error));
     }
 
-    const onSearch = async (name) => {
-        await fetch(`https://jsonplaceholder.typicode.com/users?name=${name}`)
-            .then(response => response.json())
-            .then(json => setUsers(json))
-            .catch(error => console.log(error));
+    const onSearch = (search) => {
+        setFilteredUsers(users.filter(user => user.name.toLowerCase().includes(search.toLowerCase())));
     }
 
+    const onClear = async () => {
+        await fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.json())
+            .then(json => setFilteredUsers(json))
+            .catch(error => console.log(error));
+    }
 
     return (
         <div>
             <Navbar/>
             <div>
                 <h1 className={'h1'}>Lista de Usuários</h1>
-                <AddUser onAdd={onAdd} onSearch={onSearch}/>
-                {users.map(user => (
+                <AddUser onAdd={onAdd} onSearch={onSearch} onClear={onClear}/>
+                {filteredUsers.map(user => (
                     <User key={user.id} id={user.id} name={user.name} email={user.email} website={user.website}
                           onRemove={onRemove} onUpdate={onEdit}/>
                 ))}

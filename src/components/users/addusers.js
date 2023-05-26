@@ -1,7 +1,7 @@
 import react from "react";
 import './users.css';
 
-export default function AddUser({onAdd, onSearch}) {
+export default function AddUser({onAdd, onSearch, onClear}) {
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
@@ -14,6 +14,10 @@ export default function AddUser({onAdd, onSearch}) {
     const handleOnSearch = (event) => {
         event.preventDefault();
         onSearch(event.target.name.value);
+    }
+    const handleOnClear = (event) => {
+        event.preventDefault();
+        onClear();
     }
 
     return (
@@ -28,6 +32,7 @@ export default function AddUser({onAdd, onSearch}) {
                 <h3>Buscar Usuário</h3>
                 <input placeholder={'Nome'} name={'name'} className={'input'}/>
                 <button onClick={handleOnSearch} className={'confirmbutton'}>Buscar</button>
+                <button onClick={handleOnClear} className={'cancelbutton'}>Limpar</button>
             </form>
         </div>
     );
