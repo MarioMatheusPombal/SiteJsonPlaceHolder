@@ -35,7 +35,6 @@ export default function User({id, name, email, website, onRemove, onUpdate}) {
                     <p>{website}</p>
                     <button onClick={handleOnRemove} className={'cancelbutton'}>Remover</button>
                     <button onClick={handleOnUpdate} className={'editbutton'}>Editar</button>
-                    <hr/>
                 </div>
             )}
         </div>
