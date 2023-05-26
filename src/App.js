@@ -61,13 +61,20 @@ function App() {
             .catch(error => console.log(error));
     }
 
+    const onSearch = async (name) => {
+        await fetch(`https://jsonplaceholder.typicode.com/users?name=${name}`)
+            .then(response => response.json())
+            .then(json => setUsers(json))
+            .catch(error => console.log(error));
+    }
+
 
     return (
         <div>
             <Navbar/>
             <div>
                 <h1 className={'h1'}>Lista de Usuários</h1>
-                <AddUser onAdd={onAdd}/>
+                <AddUser onAdd={onAdd} onSearch={onSearch}/>
                 {users.map(user => (
                     <User key={user.id} id={user.id} name={user.name} email={user.email} website={user.website}
                           onRemove={onRemove} onUpdate={onEdit}/>
